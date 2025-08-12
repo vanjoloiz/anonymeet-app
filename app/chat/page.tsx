@@ -120,6 +120,10 @@ const ChatPage = () => {
 
   // console.log(statusMessage);
 
+  const isShowFindAnotherButton =
+    (!partnerId && !isFindAnotherClicked) ||
+    statusMessage === "Your partner has left.";
+
   return (
     <Box
       sx={{
@@ -206,44 +210,41 @@ const ChatPage = () => {
                   {statusMessage}
                 </Typography>
 
-                {(!partnerId &&
-                  !isFindAnotherClicked &&
-                  statusMessage !== "Finding new partner...") ||
-                  (statusMessage === "Your partner has left." && (
-                    <>
-                      <LoadingButton
-                        variant="contained"
-                        color="primary"
-                        onClick={findAnotherPartner}
-                        loading={isFindingPartner}
-                        disabled={isFindingPartner}
-                        loadingPosition="start"
-                        sx={{
-                          fontWeight: 600,
-                          fontSize: "1rem",
-                          transition: "transform 0.1s ease",
-                          "&:active": {
-                            transform: "scale(0.97)",
-                          },
-                        }}
-                      >
-                        {isFindingPartner
-                          ? "Searching..."
-                          : "Find Another Partner"}
-                      </LoadingButton>
+                {isShowFindAnotherButton && (
+                  <>
+                    <LoadingButton
+                      variant="contained"
+                      color="primary"
+                      onClick={findAnotherPartner}
+                      loading={isFindingPartner}
+                      disabled={isFindingPartner}
+                      loadingPosition="start"
+                      sx={{
+                        fontWeight: 600,
+                        fontSize: "1rem",
+                        transition: "transform 0.1s ease",
+                        "&:active": {
+                          transform: "scale(0.97)",
+                        },
+                      }}
+                    >
+                      {isFindingPartner
+                        ? "Searching..."
+                        : "Find Another Partner"}
+                    </LoadingButton>
 
-                      {isFindingPartner && (
-                        <Typography
-                          variant="caption"
-                          color="text.secondary"
-                          mt={1}
-                          sx={{ userSelect: "none" }}
-                        >
-                          Looking for a new partner. Please wait...
-                        </Typography>
-                      )}
-                    </>
-                  ))}
+                    {isFindingPartner && (
+                      <Typography
+                        variant="caption"
+                        color="text.secondary"
+                        mt={1}
+                        sx={{ userSelect: "none" }}
+                      >
+                        Looking for a new partner. Please wait...
+                      </Typography>
+                    )}
+                  </>
+                )}
               </Box>
             )}
 
